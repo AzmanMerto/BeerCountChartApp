@@ -12,9 +12,10 @@ struct Home: View {
     // MARK: View Properties
     @State var currentTab: String = "Home"
     @Namespace var animation
+    @State var showSideBar: Bool = false
     var body: some View {
         HStack(spacing: 0) {
-           // MARK: Showing Only For iPad
+            // MARK: Showing Only For iPad
             if props.isiPad{
                 ViewThatFits {
                     SideBar()
@@ -28,17 +29,100 @@ struct Home: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
                     HeaderView()
+                    InfoCards()
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 20) {
+                            DailySalesView()
+                        }
+                    }
                 }
                 .padding(15)
             }
         }
         .frame(minWidth: .infinity, maxWidth: .infinity)
         .background{
-                Color.black
-                    .opacity(0.04)
-                    .ignoresSafeArea()
+            Color.black
+                .opacity(0.04)
+                .ignoresSafeArea()
+        }
+        .overlay(alignment: .leading) {
+            // MARK: Side Bar For Non iPad Devices
+            ViewThatFits {
+                SideBar()
+                ScrollView(.vertical,showsIndicators: false){
+                    SideBar()
+                }
+                .background(Color.black.ignoresSafeArea())
             }
+            .offset(x: showSideBar ? 0 : -100)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background {
+                Color.black
+                    .opacity(showSideBar ? 0.25 : 0)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        withAnimation(.easeInOut){showSideBar.toggle()}
+                    }
+            }
+        }
     }
+    
+    // MARK: Graph View
+    @ViewBuilder
+    func DailySalesView()->some View{
+        
+    }
+    
+    // MARK: Info Cards View
+    @ViewBuilder
+    func InfoCards()-> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 18) {
+                ForEach(infos) { info in
+                    VStack(alignment: .leading, spacing: 18) {
+                        HStack(spacing: 15) {
+                            Text(info.title)
+                                .font(.title3.bold())
+                            
+                            Spacer()
+                            
+                            HStack(spacing: 8) {
+                                Image(systemName: info.loss ? "arrow.down" : "arrow.up")
+                                Text("\(info.percentage)")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(info.loss ? .red : .green)
+                            }
+                            
+                            HStack(spacing: 18) {
+                                Image(systemName: info.icon)
+                                    .font(.title3)
+                                    .foregroundColor(.white)
+                                    .frame(width: 45, height: 45)
+                                    .background {
+                                        Circle()
+                                            .fill(info.iconColor)
+                                    }
+                                
+                                Text(info.amount)
+                                    .font(.title.bold())
+                                
+                            }
+                        }
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 15,style: .continuous)
+                                .fill(.white)
+                        }
+                    }
+                }
+                .padding(15)
+            }
+        }
+        .padding(.horizontal,-15)
+    }
+    
     // MARK: Header View
     @ViewBuilder
     func HeaderView() -> some View{
@@ -54,17 +138,18 @@ struct Home: View {
                 Text(Date().formatted(date: .abbreviated, time: .omitted))
                     .foregroundColor(.gray)
             }
+            .frame(maxWidth: .infinity,alignment: .leading)
             // MARK: Search Bar With Menu Button
             HStack(spacing: 10) {
                 if !(props.isiPad && !props.isMaxSplit) {
                     Button {
-                        
+                        withAnimation(.easeOut){showSideBar.toggle()}
                     } label: {
                         Image(systemName: "line.3.horizontal")
                             .font(.title2)
                             .foregroundColor(.black)
                     }
-
+                    
                     TextField("Search", text:.constant(""))
                     
                     Image("Search")
@@ -73,7 +158,7 @@ struct Home: View {
                         .frame(width: 22, height: 22)
                 }
             }
-            .padding(.horizontal)
+            .padding(.horizontal,15)
             .padding(.vertical,10)
             .background {
                 Capsule()
@@ -87,7 +172,7 @@ struct Home: View {
     func SideBar()-> some View {
         // MARK: Tabs
         let tabs: [String] =  [
-        "Home","Table","Menu","Order","History","Report","Alert","Settings"
+            "Home","Table","Menu","Order","History","Report","Alert","Settings"
         ]
         VStack(spacing: 10) {
             Image("Logo")
@@ -144,9 +229,9 @@ struct Home: View {
         .frame(maxWidth: .infinity,alignment: .top)
         .frame(width: 100)
         .background {
-                Color.white
-                    .ignoresSafeArea()
-            }
+            Color.white
+                .ignoresSafeArea()
+        }
     }
 }
 
