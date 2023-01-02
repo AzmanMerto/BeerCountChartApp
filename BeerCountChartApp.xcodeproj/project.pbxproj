@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3420C5AA29621DE900BC8D22 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3420C5A929621DE900BC8D22 /* Home.swift */; };
+		3420C5AE296243BB00BC8D22 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3420C5AD296243BB00BC8D22 /* SideBar.swift */; };
 		3475F6E3295F77C00026AD8A /* BeerCountChartApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475F6E2295F77C00026AD8A /* BeerCountChartApp.swift */; };
 		3475F6E5295F77C00026AD8A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475F6E4295F77C00026AD8A /* ContentView.swift */; };
 		3475F6E7295F77C10026AD8A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3475F6E6295F77C10026AD8A /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		3420C5A929621DE900BC8D22 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		3420C5AD296243BB00BC8D22 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		3475F6DF295F77C00026AD8A /* ResponsiveApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResponsiveApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3475F6E2295F77C00026AD8A /* BeerCountChartApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeerCountChartApp.swift; sourceTree = "<group>"; };
 		3475F6E4295F77C00026AD8A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,6 +44,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3420C5AB2962438F00BC8D22 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				34C893592961C5A000ADF788 /* Information.swift */,
+				34C8935B2961C73E00ADF788 /* Trend.swift */,
+				34C8935D2961C8AF00ADF788 /* Sale.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		3420C5AC296243AA00BC8D22 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3420C5AD296243BB00BC8D22 /* SideBar.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		3475F6D6295F77C00026AD8A = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +85,7 @@
 				3475F6E4295F77C00026AD8A /* ContentView.swift */,
 				34C8937C296211AB00ADF788 /* View */,
 				34C893562961C49000ADF788 /* Model */,
+				3420C5AC296243AA00BC8D22 /* Controller */,
 				3475F6E6295F77C10026AD8A /* Assets.xcassets */,
 				3475F6E8295F77C10026AD8A /* Preview Content */,
 			);
@@ -82,9 +103,7 @@
 		34C893562961C49000ADF788 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				34C893592961C5A000ADF788 /* Information.swift */,
-				34C8935B2961C73E00ADF788 /* Trend.swift */,
-				34C8935D2961C8AF00ADF788 /* Sale.swift */,
+				3420C5AB2962438F00BC8D22 /* Data */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,6 +189,7 @@
 			files = (
 				34C8935A2961C5A000ADF788 /* Information.swift in Sources */,
 				3475F6E5295F77C00026AD8A /* ContentView.swift in Sources */,
+				3420C5AE296243BB00BC8D22 /* SideBar.swift in Sources */,
 				34C8937E2962188100ADF788 /* ResponsiveView.swift in Sources */,
 				3475F6E3295F77C00026AD8A /* BeerCountChartApp.swift in Sources */,
 				34C8935E2961C8AF00ADF788 /* Sale.swift in Sources */,

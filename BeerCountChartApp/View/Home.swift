@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+// MARK: iOS 16+
+import Charts
 
 struct Home: View {
     var props: Properties
@@ -34,13 +36,15 @@ struct Home: View {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 20) {
                             DailySalesView()
+                            PieChartView()
                         }
                     }
+                    .padding(.horizontal,15)
                 }
                 .padding(15)
             }
         }
-        .frame(minWidth: .infinity, maxWidth: .infinity)
+        //        .frame(minWidth: .infinity, maxHeight: .infinity,alignment: .leading)
         .background{
             Color.black
                 .opacity(0.04)
@@ -68,10 +72,119 @@ struct Home: View {
         }
     }
     
+    // MARK: Piechart View
+    func PieChartView()-> some View {
+        VStack(alignment: .leading, spacing: 15) {
+            Text("Total Income")
+                .font(.title2.bold())
+            
+            ZStack {
+                Circle()
+                    .trim(from: 0.5, to: 1)
+                    .stroke(.red, style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
+                
+                Circle()
+                    .trim(from: 0.2, to: 0.5)
+                    .stroke(.yellow, style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
+                
+                Circle()
+                    .trim(from: 0, to: 0.2)
+                    .stroke(.green, style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
+                
+                Text("$200K")
+                    .font(.title3)
+                    .fontWeight(.heavy)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            HStack(spacing: 15) {
+                Label {
+                    Text("Beer")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.green)
+                }
+
+                Label {
+                    Text("Wine")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.red)
+                }
+                
+                Label {
+                    Text("Vodka")
+                        .font(.caption)
+                        .foregroundColor(.black)
+                } icon: {
+                    Image(systemName: "circle.fill")
+                        .font(.caption2)
+                        .foregroundStyle(.yellow)
+                }
+            }
+        }
+        .padding(15)
+        .frame(width: 250, height: 260)
+        .background{
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                .fill(.white)
+        }
+    }
+    
     // MARK: Graph View
     @ViewBuilder
     func DailySalesView()->some View{
-        
+        VStack(alignment: .leading, spacing: 15) {
+            Text("Daily Sales")
+                .font(.title3.bold())
+            
+            Chart {
+                ForEach(dailySales){sale in
+                    //MARK: Area Mark For Gradient BG
+                    AreaMark(
+                        x: .value("Time", sale.time),
+                        y: .value("Sale", sale.sales)
+                    )
+                    .foregroundStyle(.linearGradient(colors: [
+                        
+                        Color("Purple").opacity(0.6),
+                        Color("Purple").opacity(0.5),
+                        Color("Purple").opacity(0.3),
+                        Color("Purple").opacity(0.1),
+                        .clear
+                    ], startPoint: .top, endPoint: .bottom))
+                    .interpolationMethod(.catmullRom)
+                    
+                    // MARK: Line Mark
+                    LineMark(
+                        x: .value("Time", sale.time),
+                        y: .value("Sale", sale.sales)
+                    )
+                    .foregroundStyle(Color("Purple"))
+                    .interpolationMethod(.catmullRom)
+                    
+                    // MARK: Point Mark For Showing Points
+                    PointMark(
+                        x: .value("Time", sale.time),
+                        y: .value("Sale", sale.sales)
+                    )
+                    .foregroundStyle(Color("Purple"))
+                }
+            }
+            .frame(height: 150)
+        }
+        .padding(15)
+        .background(content: {
+            RoundedRectangle(cornerRadius: 15,style: .continuous)
+                .fill(.white)
+        })
+        .frame(minWidth: props.size.width - 30)
     }
     
     // MARK: Info Cards View
