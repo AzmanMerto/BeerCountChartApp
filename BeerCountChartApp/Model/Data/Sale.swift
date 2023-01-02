@@ -15,7 +15,7 @@ struct sale: Identifiable {
     var time: String
 }
 
-var dialySales: [sale] = [
+var dailySales: [sale] = [
     .init(sales: 20, time: "11:00"),
     .init(sales: 40, time: "12:00"),
     .init(sales: 40, time: "1:00"),
