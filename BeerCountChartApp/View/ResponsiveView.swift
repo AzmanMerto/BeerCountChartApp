@@ -20,7 +20,11 @@ struct ResponsiveView<Content: View>: View {
             let isLandscape = size.width > size.height
             let isIpad = UIDevice.current.userInterfaceIdiom == .pad
             let isMaxSplit = isSplit() && size.width < 400
-            let properties = Properties(isLandscape: isLandscape, isiPad: isIpad, isSplit: isSplit(), isMaxSplit: isMaxSplit, size: size)
+            
+            // MARK: In vertical Hiding Side Bar  Completely
+            // In Horizontal Showing Side bar for 0.75 Fraction
+            let isAdaptable = isIpad && (isLandscape ? isMaxSplit :!isSplit())
+            let properties = Properties(isLandscape: isLandscape, isiPad: isIpad, isSplit: isSplit(), isMaxSplit: isMaxSplit,isAdoptable: isAdaptable ,size: size)
             
             content(properties)
                 .frame(width: size.width, height: size.height)
@@ -41,5 +45,6 @@ struct Properties{
     var isSplit: Bool
 // MARK: If the App size is reduced more than 1/3 in split mode on iPad
     var isMaxSplit: Bool
+    var isAdoptable: Bool
     var size: CGSize
 }
