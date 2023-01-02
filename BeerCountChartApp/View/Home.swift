@@ -242,6 +242,7 @@ struct Home: View {
             }
             .frame(height: 150)
         }
+        .frame(width: .infinity, height: 230)
         .padding(15)
         .background(content: {
             RoundedRectangle(cornerRadius: 15,style: .continuous)
@@ -402,12 +403,13 @@ struct Home: View {
             .padding(.top,20)
         }
         .padding(.vertical)
-        .frame(maxWidth: .infinity,alignment: .top)
+        .frame(maxWidth: .infinity,maxHeight: .infinity ,alignment: .top)
         .frame(width: 100)
         .background {
             Color.white
+                .frame(height: 1000)
                 .ignoresSafeArea()
-        }
+        }.frame(height: .infinity)
     }
 }
 
